@@ -376,10 +376,12 @@ clean_list :
 	$(REMOVE) $(TARGET).sym
 	$(REMOVE) $(TARGET).lnk
 	$(REMOVE) $(TARGET).lss
+	$(REMOVE) $(TARGET).lst
 	$(REMOVE) $(OBJ)
 	$(REMOVE) $(LST)
 	$(REMOVE) $(SRC:.c=.s)
 	$(REMOVE) $(SRC:.c=.d)
+	$(REMOVE) $(PSRC:.cpp=.d)
 	$(REMOVE) *~
 
 # Automatically generate C source code dependencies. 
@@ -395,13 +397,13 @@ clean_list :
 	| sed 's,\(.*\)\.o[ :]*,\1.o \1.d : ,g' > $@; \
 	[ -s $@ ] || rm -f $@
 
-%.d: %.cpp
-	set -e; $(CC) -MM $(ALL_CXXFLAGS) $< \
-	| sed 's,\(.*\)\.o[ :]*,\1.o \1.d : ,g' > $@; \
-	[ -s $@ ] || rm -f $@
-
 # Remove the '-' if you want to see the dependency files generated.
 -include $(SRC:.c=.d)
+
+%.d: %.cpp
+	set -e; $(CXX) -MM $(ALL_CXXFLAGS) $< \
+	| sed 's,\(.*\)\.o[ :]*,\1.o \1.d : ,g' > $@; \
+	[ -s $@ ] || rm -f $@
 
 
 
