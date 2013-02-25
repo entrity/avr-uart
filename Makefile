@@ -88,6 +88,12 @@ CXXFLAGS = -g -O$(OPT) \
 -Wa,-adhlns=$(<:.cpp=.lst) \
 $(patsubst %,-I%,$(EXTRAINCDIRS))
 
+CXXCFLAGS = -g -O$(OPT) \
+-funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums \
+-Wall \
+-Wa,-adhlns=$(<:.c=.lst) \
+$(patsubst %,-I%,$(EXTRAINCDIRS))
+
 
 # Set a "language standard" compiler flag.
 #   Unremark just one line below to set the language standard to use.
@@ -227,6 +233,7 @@ LST = $(ASRC:.S=.lst) $(SRC:.c=.lst)
 ALL_CFLAGS = -mmcu=$(MCU) -I. $(CFLAGS)
 ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 ALL_CXXFLAGS = -mmcu=$(MCU) -I $(CXXFLAGS)
+ALL_CXXCFLAGS = -mmcu=$(MCU) -I $(CXXCFLAGS)
 
 
 
@@ -336,7 +343,7 @@ program: $(TARGET).hex $(TARGET).eep
 %.o: %.c
 	@echo
 	@echo $(MSG_COMPILING) $<
-	$(CXX) -c $(ALL_CXXFLAGS) $< -o $@
+	$(CXX) -c $(ALL_CXXCFLAGS) $< -o $@
 
 
 # Compile: create assembler files from C source files.
