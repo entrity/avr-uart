@@ -404,13 +404,15 @@ clean_list :
 	| sed 's,\(.*\)\.o[ :]*,\1.o \1.d : ,g' > $@; \
 	[ -s $@ ] || rm -f $@
 
-# Remove the '-' if you want to see the dependency files generated.
--include $(SRC:.c=.d)
-
 %.d: %.cpp
 	set -e; $(CXX) -MM $(ALL_CXXFLAGS) $< \
 	| sed 's,\(.*\)\.o[ :]*,\1.o \1.d : ,g' > $@; \
 	[ -s $@ ] || rm -f $@
+
+# Remove the '-' if you want to see the dependency files generated.
+-include $(SRC:.c=.d)
+
+-include $(PSRC:.cpp=.d)
 
 
 
