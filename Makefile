@@ -1,3 +1,9 @@
+# List C source files here. (C dependencies are automatically generated.)
+SRC = buffers.c
+
+# List C++ source files here.
+PSRC = main.cpp
+
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
 EXTRAINCDIRS = 
@@ -16,7 +22,8 @@ EXTRAINCDIRS =
 # MCU = attiny13
 # MCU = attiny2313
 # MCU = atmega8
-MCU = attiny85
+# MCU = attiny85
+MCU = atmega328p
 
 # Target file name (without extension).
 TARGET = main
@@ -42,16 +49,6 @@ OPT = s
 
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
-
-# List C source files here. (C dependencies are automatically generated.)
-# SRC = $(TARGET).c
-
-# If there is more than one source file, append them above, or modify and
-# uncomment the following:
-SRC = bar.c
-
-# List C++ source files here.
-PSRC = main.cpp
 
 
 # You can also wrap lines by appending a backslash to the end of the line:
@@ -339,7 +336,7 @@ program: $(TARGET).hex $(TARGET).eep
 %.o: %.c
 	@echo
 	@echo $(MSG_COMPILING) $<
-	$(CXX) -c $(ALL_CFLAGS) $< -o $@
+	$(CXX) -c $(ALL_CXXFLAGS) $< -o $@
 
 
 # Compile: create assembler files from C source files.
